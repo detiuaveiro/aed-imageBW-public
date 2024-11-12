@@ -30,7 +30,16 @@ Execute:
 
 Dada a natureza do trabalho, poderá ser necessário
 atualizar repositório base (upstream) deste projeto.
-Se isso acontecer, deverá atualizar o seu repositório com os seguintes comandos:
+Se isso acontecer, deverá atualizar o seu repositório de duas formas
+
+Pode actualizar através da página do repositório.
+Sempre que o repositório original contiver commits novos em relação ao seu pode clicar em:
+
+```
+Sync fork
+```
+
+Se quiser actualizar através da linha de comandos:
 
 ```bash
 git remote add upstream git@github.com/detiuaveiro/aed-imageBW-public.git
