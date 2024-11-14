@@ -8,7 +8,7 @@ Este é o código-fonte para o primeiro projeto de AED 2024-2025.
 - `imageBW.h` - interface do módulo
 - `instrumentation.[ch]` - módulo para contagens de operações e medição de tempos
 - `imageBWTest.c` - programa de teste simples
-- `imageBWTool.c` - programa de teste mais versátil
+- `imageBWTool.c` - programa de teste mais versátil (BREVEMENTE)
 - `Makefile` - regras para compilar e testar usando `make`
 
 - `README.md` - estas informações que está a ler
@@ -17,8 +17,8 @@ Este é o código-fonte para o primeiro projeto de AED 2024-2025.
 
 Execute:
 
-- `make pbm` - para descarregar imagens para pasta `pbm/`
-- `make setup` - para descarregar imagens para testes em `test/`
+- `make pbm` - para descarregar imagens para pasta `pbm/` (BREVEMENTE)
+- `make setup` - para descarregar imagens para testes em `test/` (BREVEMENTE)
 
 ## Compilar
 
@@ -26,7 +26,6 @@ Execute:
 - `make clean` - Limpa ficheiros objeto e executáveis.
 
 ## Atualizar repositório
-
 
 Dada a natureza do trabalho, poderá ser necessário
 atualizar repositório base (upstream) deste projeto.
