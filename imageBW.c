@@ -58,83 +58,21 @@ struct image {
 
 /// Error handling functions
 
-// In this module, only functions dealing with memory allocation or file
-// (I/O) operations use defensive techniques.
-//
-// When one of these functions fails, it signals this by returning an error
-// value such as NULL or 0 (see function documentation), and sets an internal
-// variable (errCause) to a string indicating the failure cause.
-// The errno global variable thoroughly used in the standard library is
-// carefully preserved and propagated, and clients can use it together with
-// the ImageErrMsg() function to produce informative error messages.
-// The use of the GNU standard library error() function is recommended for
-// this purpose.
-//
-// Additional information:  man 3 errno;  man 3 error;
+// In this module, only functions dealing with memory allocation or
+// file (I/O) operations use defensive techniques.
+// When one of these functions fails,
+// it immediately prints an error and exits the program.
+// This fail-fast approach to error handling is simpler for the programmer.
 
-// Variable to preserve errno temporarily
-static int errsave = 0;
+// Use the following function to check a condition
+// and exit if it fails.
 
-// Error cause
-static char* errCause;
-
-/// Error cause.
-/// After some other module function fails (and returns an error code),
-/// calling this function retrieves an appropriate message describing the
-/// failure cause.  This may be used together with global variable errno
-/// to produce informative error messages (using error(), for instance).
-///
-/// After a successful operation, the result is not garanteed (it might be
-/// the previous error cause).  It is not meant to be used in that situation!
-char* ImageErrMsg() {  ///
-  return errCause;
-}
-
-// Defensive programming aids
-//
-// Proper defensive programming in C, which lacks an exception mechanism,
-// generally leads to possibly long chains of function calls, error checking,
-// cleanup code, and return statements:
-//   if ( funA(x) == errorA ) { return errorX; }
-//   if ( funB(x) == errorB ) { cleanupForA(); return errorY; }
-//   if ( funC(x) == errorC ) { cleanupForB(); cleanupForA(); return errorZ; }
-//
-// Understanding such chains is difficult, and writing them is boring, messy
-// and error-prone.  Programmers tend to overlook the intricate details,
-// and end up producing unsafe and sometimes incorrect programs.
-//
-// In this module, we try to deal with these chains using a somewhat
-// unorthodox technique.  It resorts to a very simple internal function
-// (check) that is used to wrap the function calls and error tests, and chain
-// them into a long Boolean expression that reflects the success of the entire
-// operation:
-//   success =
-//   check( funA(x) != error , "MsgFailA" ) &&
-//   check( funB(x) != error , "MsgFailB" ) &&
-//   check( funC(x) != error , "MsgFailC" ) ;
-//   if (!success) {
-//     conditionalCleanupCode();
-//   }
-//   return success;
-//
-// When a function fails, the chain is interrupted, thanks to the
-// short-circuit && operator, and execution jumps to the cleanup code.
-// Meanwhile, check() set errCause to an appropriate message.
-//
-// This technique has some legibility issues and is not always applicable,
-// but it is quite concise, and concentrates cleanup code in a single place.
-//
-// See example utilization in ImageLoad and ImageSave.
-//
-// (You are not required to use this in your code!)
-
-// Check a condition and set errCause to failmsg in case of failure.
-// This may be used to chain a sequence of operations and verify its success.
-// Propagates the condition.
-// Preserves global errno!
-static int check(int condition, const char* failmsg) {
-  errCause = (char*)(condition ? "" : failmsg);
-  return condition;
+// Check a condition and if false, print failmsg and exit.
+static void check(int condition, const char* failmsg) {
+  if (!condition) {
+    perror(failmsg);
+    exit(errno || 255);
+  }
 }
 
 /// Init Image library.  (Call once!)
@@ -158,14 +96,14 @@ void ImageInit(void) {  ///
 static Image AllocateImageHeader(uint32 width, uint32 height) {
   assert(width > 0 && height > 0);
   Image newHeader = malloc(sizeof(struct image));
-  assert(newHeader != NULL);
+  check(newHeader != NULL, "malloc");
 
   newHeader->width = width;
   newHeader->height = height;
 
   // Allocating the array of pointers to RLE rows
   newHeader->row = malloc(height * sizeof(int*));
-  assert(newHeader->row != NULL);
+  check(newHeader->row != NULL, "malloc");
 
   return newHeader;
 }
@@ -174,12 +112,12 @@ static Image AllocateImageHeader(uint32 width, uint32 height) {
 static int* AllocateRLERowArray(uint32 n) {
   assert(n > 2);
   int* newArray = malloc(n * sizeof(int));
-  assert(newArray != NULL);
+  check(newArray != NULL, "malloc");
 
   return newArray;
 }
 
-/// Conpute the number of runs of a non-compressed (RAW) image row
+/// Compute the number of runs of a non-compressed (RAW) image row
 static uint32 GetNumRunsInRAWRow(uint32 image_width, const uint8* RAW_row) {
   assert(image_width > 0);
   assert(RAW_row != NULL);
@@ -212,7 +150,7 @@ static uint32 GetNumRunsInRLERow(const int* RLE_row) {
   return num_runs;
 }
 
-/// Get the number of elementsof an array storing a compressed RLE image row
+/// Get the number of elements of an array storing a compressed RLE image row
 static uint32 GetSizeRLERowArray(const int* RLE_row) {
   assert(RLE_row != NULL);
 
@@ -236,7 +174,7 @@ static int* CompressRow(uint32 image_width, const uint8* RAW_row) {
 
   // Allocate the RLE row array
   int* RLE_row = malloc((num_runs + 2) * sizeof(int));
-  assert(RLE_row != NULL);
+  check(RLE_row != NULL, "malloc");
 
   // Go through the RAW_row
   RLE_row[0] = (int)RAW_row[0];  // Initial pixel value
@@ -261,7 +199,7 @@ static uint8* UncompressRow(uint32 image_width, const int* RLE_row) {
 
   // The uncompressed row
   uint8* row = (uint8*)malloc(image_width * sizeof(uint8));
-  assert(row != NULL);
+  check(row != NULL, "malloc");
 
   // Go through the RLE_row until EOR is found
   int pixel_value = RLE_row[0];
