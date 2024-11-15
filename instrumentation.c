@@ -86,19 +86,27 @@ double InstrCTU = 1.0;  ///extern
 /// Run and time a loop of basic memory and arithmetic operations to set
 /// a reasonably cpu-independent time unit.
 void InstrCalibrate(void) { ///
-  const int size = 4*1024;     // 2^12!
-  const int mask = size - 1;
-  int array[size];  // alloc array in stack, not initialized on purpose
-  double time = cpu_time();
-  srand((unsigned int)(time*1e9));
-  for (int n = 0; n < 40000000; n++) {
-    int i = rand() & mask;
-    int j = rand() & mask;
-    int k = rand() & mask;
-    array[k] ^= array[i] + array[j] + i*j;
-    //printf("%d %d %d\n", i, j, k);  // debug
+  // Defining environment variable INSTRCTU avoids calibration cycle!
+  char *val = getenv("INSTRCTU");
+  if (val != NULL) {
+    InstrCTU = atof(val);
   }
-  InstrCTU = cpu_time() - time;
+  else {
+    const int size = 4*1024;     // 2^12!
+    const int mask = size - 1;
+    int array[size];  // alloc array in stack, not initialized on purpose
+    double time = cpu_time();
+    srand((unsigned int)(time*1e9));
+    for (int n = 0; n < 40000000; n++) {
+      int i = rand() & mask;
+      int j = rand() & mask;
+      int k = rand() & mask;
+      array[k] ^= array[i] + array[j] + i*j;
+      //printf("%d %d %d\n", i, j, k);  // debug
+    }
+    InstrCTU = cpu_time() - time;
+  }
+  printf("# INSTRCTU=%f\n", InstrCTU);
 }
 
 /// Reset counters to zero and store cpu_time.
