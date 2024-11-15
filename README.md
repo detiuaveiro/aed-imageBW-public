@@ -8,8 +8,9 @@ Este é o código-fonte para o primeiro projeto de AED 2024-2025.
 - `imageBW.h` - interface do módulo
 - `instrumentation.[ch]` - módulo para contagens de operações e medição de tempos
 - `imageBWTest.c` - programa de teste simples
-- `imageBWTool.c` - programa de teste mais versátil (BREVEMENTE)
+- `imageBWTool.c` - programa de teste mais versátil
 - `Makefile` - regras para compilar e testar usando `make`
+- `imageDiff.py` - script python para medir diferenças entre imagens
 
 - `README.md` - estas informações que está a ler
 
