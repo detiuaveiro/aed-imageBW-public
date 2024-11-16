@@ -109,7 +109,7 @@ int main(int ac, char* av[]) {
       fprintf(log, "Info on I%d\n", n-1);
       w = ImageWidth(img[n-1]);
       h = ImageHeight(img[n-1]);
-      printf("# Size: %ux%u\n", w, h);
+      fprintf(log, "# Size: %ux%u\n", w, h);
     } else if (strcmp(av[k], "tic") == 0) {
       InstrReset();
     } else if (strcmp(av[k], "toc") == 0) {
@@ -136,17 +136,17 @@ int main(int ac, char* av[]) {
       n++;
     } else if (strcmp(av[k], "raw") == 0) {
       if (n < 1) { err = 2; break; }  // enough input images?
-      fprintf(log, "ImageRAWPrint(I%d\n", n-1);
+      fprintf(log, "ImageRAWPrint(I%d)\n", n-1);
       ImageRAWPrint(img[n-1]);
     } else if (strcmp(av[k], "rle") == 0) {
       if (n < 1) { err = 2; break; }  // enough input images?
-      fprintf(log, "ImageRLEPrint(I%d\n", n-1);
-      ImageRAWPrint(img[n-1]);
+      fprintf(log, "ImageRLEPrint(I%d)\n", n-1);
+      ImageRLEPrint(img[n-1]);
     } else if (strcmp(av[k], "equal") == 0) {
       if (n < 2) { err = 2; break; }  // enough input images?
       fprintf(log, "ImageIsEqual(I%d, I%d) -> ", n-2, n-1);
       int eq = ImageIsEqual(img[n-2], img[n-1]);
-      fprintf(log, "%d", eq);
+      fprintf(log, "%d\n", eq);
     } else if (strcmp(av[k], "neg") == 0) {
       if (n < 1) { err = 2; break; }  // enough input images?
       if (n >= N) { err = 3; break; } // enough space for output?

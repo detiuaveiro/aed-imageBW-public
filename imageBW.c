@@ -298,7 +298,7 @@ void ImageRAWPrint(const Image img) {
   assert(img != NULL);
 
   printf("width = %d height = %d\n", img->width, img->height);
-  printf(" RAW image\n");
+  printf("RAW image:\n");
 
   // Print the pixels of each image row
   for (uint32 i = 0; i < img->height; i++) {
@@ -323,7 +323,7 @@ void ImageRLEPrint(const Image img) {
   assert(img != NULL);
 
   printf("width = %d height = %d\n", img->width, img->height);
-  printf(" RLE encoding\n");
+  printf("RLE encoding:\n");
 
   // Print the compressed rows information
   for (uint32 i = 0; i < img->height; i++) {
