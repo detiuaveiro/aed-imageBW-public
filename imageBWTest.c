@@ -19,6 +19,11 @@
 #include "instrumentation.h"
 
 int main(int argc, char* argv[]) {
+  if (argc != 1) {
+    fprintf(stderr, "Usage: %s  # no arguments required (for now)\n", argv[0]);
+    exit(1);
+  }
+
   // To initalize operation counters
   ImageInit();
 
@@ -94,7 +99,7 @@ int main(int argc, char* argv[]) {
   ImageDestroy(&image_10);
   ImageDestroy(&image_11);
 
-   ***/
+  ***/
 
   return 0;
 }
