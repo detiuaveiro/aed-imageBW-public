@@ -50,3 +50,17 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Project-specific files to ignore below
+
+# Executable files
+imageBWTest
+imageBWTool
+
+# Image files and auxiliary dirs
+*.pbm
+pbm/
+test/
+pub/
+
+
