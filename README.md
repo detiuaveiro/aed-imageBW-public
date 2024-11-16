@@ -2,6 +2,23 @@
 
 Este é o código-fonte para o primeiro projeto de AED 2024-2025.
 
+## Ambiente de programação
+
+Recomendamos vivamente que trabalhem em ambiente Linux
+ou dentro do [WSL em Windows][wsl].
+Nesse ambiente, podem instalar as ferramentas necessárias facilmente:
+
+```bash
+sudo apt install build-essential git wget
+sudo snap install --classic code            # if you want VS Code 
+```
+
+[wsl]: https://learn.microsoft.com/en-us/windows/wsl/install
+
+As instruções neste documento e nos ficheiros fornecidos
+presumem que estão a trabalhar nesse tipo de ambiente.
+_You have been warned!_
+
 ## Ficheiros
 
 - `imageBW.c` - implementação do módulo (a COMPLETAR)
@@ -18,7 +35,7 @@ Este é o código-fonte para o primeiro projeto de AED 2024-2025.
 
 Execute:
 
-- `make pbm` - para descarregar imagens para pasta `pbm/` (BREVEMENTE)
+- `make pbm` - para descarregar imagens para pasta `pbm/`
 - `make setup` - para descarregar imagens para testes em `test/` (BREVEMENTE)
 
 ## Compilar
