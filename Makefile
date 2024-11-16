@@ -1,6 +1,7 @@
 # make              # to compile files and create the executables
 # make clean        # to cleanup object files and executables
 # make cleanobj     # to cleanup object files only
+# make pbm          # to download example images to the pbm/ dir
 
 CFLAGS = -Wall -Wextra -O2 -g
 
@@ -21,6 +22,9 @@ imageBWTool.o: imageBW.h instrumentation.h
 %.o: %.h
 
 # Make uses builtin rule to create .o from .c files.
+
+pbm:
+	wget -O- https://sweet.ua.pt/jmr/aed/pbm.tgz | tar xzf -
 
 cleanobj:
 	rm -f *.o
