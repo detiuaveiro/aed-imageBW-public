@@ -420,9 +420,8 @@ Image ImageLoad(const char* filename) {  ///
 }
 
 /// Save image to PBM file.
-/// On success, returns nonzero.
-/// On failure, returns 0, and
-/// a partial and invalid file may be left in the system.
+/// On success, returns unspecified integer. (No need to check!)
+/// On failure, does not return, EXITS program!
 int ImageSave(const Image img, const char* filename) {  ///
   assert(img != NULL);
   int w = img->width;
@@ -443,8 +442,8 @@ int ImageSave(const Image img, const char* filename) {  ///
     // Fill padding pixels with WHITE
     memset(raw_row + w, WHITE, nbytes * 8 - w);
     packBits(nbytes, bytes, raw_row);
-    check(fwrite(bytes, sizeof(uint8), nbytes, f) == (size_t)nbytes,
-          "Writing pixels failed");
+    size_t written = fwrite(bytes, sizeof(uint8), nbytes, f);
+    check(written == (size_t)nbytes, "Writing pixels failed");
     free(raw_row);
   }
 
