@@ -33,15 +33,19 @@ _You have been warned!_
 
 ## Descarregar imagens
 
-Execute:
-
 - `make pbm` - para descarregar imagens para pasta `pbm/`
-- `make setup` - para descarregar imagens para testes em `test/` (BREVEMENTE)
+- `make setup` - para descarregar imagens para testes em `pbmt/`
 
 ## Compilar
 
 - `make` - Compila e gera os programas de teste.
 - `make clean` - Limpa ficheiros objeto e executáveis.
+
+## Testar
+
+- `make test1` - para correr o `test1` (também há `test2`, `test3`, ...)
+- `make tests` - para correr todos os testes
+
 
 ## Atualizar repositório
 
@@ -59,11 +63,11 @@ Sync fork
 Se quiser actualizar através da linha de comandos:
 
 ```bash
-git remote add upstream git@github.com/detiuaveiro/aed-imageBW-public.git
+git remote add upstream git@github.com:detiuaveiro/detiuaveiro-aed-2024-trabalho-1-aed-imageBW-public.git
 
 git fetch upstream
-git checkout main
-git merge --allow-unrelated-histories upstream/main
+git checkout master
+git merge --allow-unrelated-histories upstream/master
 # (Resolver quaisquer conflitos que surjam...)
 git commit
 ```
