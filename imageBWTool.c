@@ -180,8 +180,8 @@ int main(int ac, char* av[]) {
     } else if (strcmp(av[k], "vmirror") == 0) {
       if (n < 1) { err = 2; break; }  // enough input images?
       if (n >= N) { err = 3; break; } // enough space for output?
-      fprintf(log, "ImageHorizontalMirror(I%d) -> I%d\n", n-1, n);
-      img[n] = ImageHorizontalMirror(img[n-1]);
+      fprintf(log, "ImageVerticalMirror(I%d) -> I%d\n", n-1, n);
+      img[n] = ImageVerticalMirror(img[n-1]);
       n++;
     } else if (strcmp(av[k], "repb") == 0) {
       if (n < 2) { err = 2; break; }  // enough input images?

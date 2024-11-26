@@ -55,7 +55,49 @@ test3: setup	# equal
 	INSTRCTU=1 ./imageBWTool pbmt/chess9830.pbm pbmt/chess9830x.pbm equal \
 	| grep "ImageIsEqual(I0, I1) -> 0"
 
-TESTS = test1 test2 test3 #test4 test5 test6 test7 test8 test9
+test4: setup    # AND
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/chess12630.pbm pbmt/chess12621.pbm and \
+	raw save imgAND.pbm
+	cmp imgAND.pbm pbmt/imgAND.pbm
+
+test5: setup    # OR
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/chess12630.pbm pbmt/chess12621.pbm or \
+	raw save imgOR.pbm
+	cmp imgOR.pbm pbmt/imgOR.pbm
+
+test6: setup    # XOR
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/chess12630.pbm pbmt/chess12621.pbm xor \
+	raw save imgXOR.pbm
+	cmp imgXOR.pbm pbmt/imgXOR.pbm
+
+test7: setup    # hmirror
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/imgAND.pbm raw hmirror raw \
+    save imgHMIRROR.pbm
+	cmp imgHMIRROR.pbm pbmt/imgHMIRROR.pbm
+
+test8: setup    # vmirror
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/imgAND.pbm raw vmirror raw \
+    save imgVMIRROR.pbm
+	cmp imgVMIRROR.pbm pbmt/imgVMIRROR.pbm
+
+test9: setup    # repb
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/chess12630.pbm pbmt/chess12320.pbm repb \
+	raw save imgREPB.pbm
+	cmp imgREPB.pbm pbmt/imgREPB.pbm
+
+test10: setup    # repr
+	@echo "==== $@ ===="
+	INSTRCTU=1 ./imageBWTool pbmt/chess12621.pbm pbmt/chess5631.pbm repr \
+	raw save imgREPR.pbm
+	cmp imgREPR.pbm pbmt/imgREPR.pbm
+
+TESTS = test1 test2 test3 test4 test5 test6 test7 test8 test9 test10
 .PHONY: tests
 tests: $(TESTS)
 
