@@ -28,6 +28,8 @@ imageBWTool.o: imageBW.h instrumentation.h
 pbm:
 	wget -O- https://sweet.ua.pt/jmr/aed/pbm.tgz | tar xzf -
 
+# 2024-11-26: pbmt/* is now managed by git,
+# so pbmt/ target is no longer required, but was kept anyway.
 pbmt/:
 	wget -O- https://sweet.ua.pt/jmr/aed/pbmt.tgz | tar xzf -
 
@@ -41,10 +43,10 @@ test1: setup	# neg (given)
 
 test2: setup	# chess
 	@echo "==== $@ ===="
-	INSTRCTU=1 ./imageBWTool chess 9,8,3,0 raw rle save chess9830.pbm
-	cmp chess9830.pbm pbmt/chess9830.pbm
-	INSTRCTU=1 ./imageBWTool chess 9,8,2,1 raw rle save chess9821.pbm
-	cmp chess9821.pbm pbmt/chess9821.pbm
+	INSTRCTU=1 ./imageBWTool chess 12,6,3,0 raw rle save chess12630.pbm
+	cmp chess12630.pbm pbmt/chess12630.pbm
+	INSTRCTU=1 ./imageBWTool chess 12,6,2,1 raw rle save chess12621.pbm
+	cmp chess12621.pbm pbmt/chess12621.pbm
 
 test3: setup	# equal
 	@echo "==== $@ ===="

@@ -59,7 +59,7 @@ imageBWTool
 
 # Image files and auxiliary dirs
 *.pbm
-pbm*/
+pbm/
 pub/
 
 
