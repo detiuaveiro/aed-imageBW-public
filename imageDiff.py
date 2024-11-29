@@ -18,12 +18,13 @@ def main(args):
         exit(1)
 
     difCounter = Counter({0: 0, 1: 0})
+    difName = {0: "IGUAIS", 1: "DIFFERENTES"}
 
     with Image.open(args[1]) as img1, Image.open(args[2]) as img2:
         if img1.size != img2.size:
             print("DIFFERENT SIZES:", img1.size, img2.size)
             return 1
-        difCounter.update(min(abs(a - b), 2) for a, b in
+        difCounter.update(min(abs(a-b), 1) for a, b in
                           zip(img1.getdata(), img2.getdata()))
 
     w, h = img1.size
@@ -33,7 +34,7 @@ def main(args):
 
     for dif in sorted(difCounter.keys()):
         c = difCounter[dif]
-        print(f"{c:8} pixels\t{c/tot:4.0%}\tDIF{dif:<12}")
+        print(f"{c:8} pixels\t{c/tot:4.0%}\t{difName[dif]:<12}")
 
     return difCounter[0] != tot
 
